@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhg2lwgdw2oau"]
+
+[ext_resource type="Script" path="res://Scripts/tile.gd" id="1_frnak"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmpj3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vgdl"]
+bg_color = Color(0.427451, 0.427451, 0.427451, 1)
+
+[node name="Tile" type="Panel" node_paths=PackedStringArray("button")]
+offset_right = 64.0
+offset_bottom = 64.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_lmpj3")
+script = ExtResource("1_frnak")
+button = NodePath("Button")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_5vgdl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5vgdl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5vgdl")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
