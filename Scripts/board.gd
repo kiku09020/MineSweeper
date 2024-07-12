@@ -50,7 +50,10 @@ func generate_tiles():
 		tiles.append(tile)
 		
 		# はじめにクリックされたタイミングで、爆弾をセット
-		tile.on_button_clicked.connect(func(): set_mines_on_tiles())
+		tile.on_button_clicked.connect(func():
+			set_mines_on_tiles()
+			clear_tiles_around_zero(tile)
+		)
 
 #------------------------------------------------------------
 
@@ -74,6 +77,47 @@ func set_mines_around_count(tile: Tile):
 	var _position = tile.tile_position
 	var count = 0
 
+	for target_tile in get_around_tiles(tile, true):
+		if target_tile.is_mine:
+			count += 1
+	
+	tile.set_mine_count(count)
+
+#------------------------------------------------------------
+
+## 0タイルをクリックしたときに、周りの数字タイルのクリア処理
+func clear_tiles_around_zero(tile: Tile):
+	# 0タイル以外はスキップ
+	if tile.count != 0: return
+
+	# クリックされたタイルをキューに追加
+	var queue: Array = []
+	queue.append(tile)
+
+	# キューが空になるまで繰り返す
+	while !queue.is_empty():
+		var current_tile = queue.pop_front()
+
+		# タイルクリア
+		current_tile.cleared()
+
+		# タイルの斜めを除く周りの爆弾タイル以外をクリア
+		var target_tiles = get_around_tiles(current_tile, false)
+		for target_tile in target_tiles:
+			if target_tile.is_mine or target_tile.is_cleared: continue
+
+			# 周りのタイルに爆弾数が0のタイルが含まれていない場合は無視
+			if target_tiles.filter(func(tile): return tile.count == 0&&!tile.is_mine).size() == 0: continue
+
+			# タイルをキューに追加
+			queue.append(target_tile)
+
+#------------------------------------------------------------
+## タイルの周りのタイルを取得
+func get_around_tiles(tile: Tile, contains_diagonal: bool):
+	var _position = tile.tile_position
+	var around_tiles: Array = []
+
 	for i in range( - 1, 2):
 		for j in range( - 1, 2):
 			var target_position = _position + Vector2i(i, j)
@@ -82,11 +126,9 @@ func set_mines_around_count(tile: Tile):
 			if target_position.y < 0 or target_position.y >= board_size: continue
 			if target_position == _position: continue # 自分自身はスキップ
 
-			# 目標タイルが爆弾の場合、カウント
-			var target_tile = tiles[target_position.y * board_size + target_position.x]
-			if target_tile.is_mine:
-				count += 1
-	
-	tile.set_mine_count(count)
+			# 斜めスキップ
+			if !contains_diagonal and i != 0 and j != 0: continue
 
-#------------------------------------------------------------
+			around_tiles.append(tiles[target_position.y * board_size + target_position.x])
+
+	return around_tiles

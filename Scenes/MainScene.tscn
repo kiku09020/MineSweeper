@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6y2rjf1gfk0e"]
+[gd_scene load_steps=3 format=3 uid="uid://c6y2rjf1gfk0e"]
 
 [ext_resource type="PackedScene" uid="uid://cs6t3388kocam" path="res://Scenes/PackedScenes/board.tscn" id="1_vvcjq"]
+[ext_resource type="Script" path="res://Scenes/InputManager.gd" id="2_fq5p5"]
 
 [node name="Root" type="Node"]
 
@@ -17,3 +18,8 @@ grow_vertical = 2
 [node name="Board" parent="ControlRoot/BoardLayer" instance=ExtResource("1_vvcjq")]
 
 [node name="GameUILayer" type="CanvasLayer" parent="ControlRoot"]
+
+[node name="GameManager" type="Node" parent="."]
+
+[node name="InputManager" type="Node" parent="."]
+script = ExtResource("2_fq5p5")
