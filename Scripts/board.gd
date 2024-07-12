@@ -102,12 +102,9 @@ func clear_tiles_around_zero(tile: Tile):
 		current_tile.cleared()
 
 		# タイルの斜めを除く周りの爆弾タイル以外をクリア
-		var target_tiles = get_around_tiles(current_tile, false)
+		var target_tiles = get_around_tiles(current_tile, true)
 		for target_tile in target_tiles:
-			if target_tile.is_mine or target_tile.is_cleared: continue
-
-			# 周りのタイルに爆弾数が0のタイルが含まれていない場合は無視
-			if target_tiles.filter(func(tile): return tile.count == 0&&!tile.is_mine).size() == 0: continue
+			if target_tile.is_mine or target_tile.is_cleared or current_tile.count != 0: continue
 
 			# タイルをキューに追加
 			queue.append(target_tile)
