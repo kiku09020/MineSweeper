@@ -1,7 +1,8 @@
 #*--------------- Extend ---------------*
-extends Node
+extends CanvasLayer
 
 #*--------------- Extported Fields ---------------*
+@export var flag_count_label: Label
 
 #*--------------- Fields ---------------*
 
@@ -16,14 +17,9 @@ func _process(_delta: float) -> void:
 
 # Input
 func _input(_event: InputEvent) -> void:
-	# 終了
-	if _event.is_action_pressed("ui_cancel"):
-		get_tree().quit()
-
-	# リトライ
-	if _event.is_action_pressed("retry"):
-		get_tree().reload_current_scene()
-
 	pass
 
 #*--------------- Methods ---------------*
+
+func _on_board_on_rest_mine_count_changed(flag_count: int) -> void:
+	flag_count_label.text = str(flag_count)

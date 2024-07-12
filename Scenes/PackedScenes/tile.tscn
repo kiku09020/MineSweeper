@@ -7,7 +7,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vgdl"]
 bg_color = Color(0.427451, 0.427451, 0.427451, 1)
 
-[node name="Tile" type="Panel" node_paths=PackedStringArray("button", "label")]
+[node name="Tile" type="Panel" node_paths=PackedStringArray("button", "label", "flag_label")]
 offset_right = 64.0
 offset_bottom = 64.0
 size_flags_horizontal = 3
@@ -16,6 +16,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_lmpj3")
 script = ExtResource("1_frnak")
 button = NodePath("Button")
 label = NodePath("Label")
+flag_label = NodePath("Button/FlagLabel")
 mine_rate = 0.15
 
 [node name="Label" type="Label" parent="."]
@@ -40,4 +41,15 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_5vgdl")
 theme_override_styles/hover = SubResource("StyleBoxFlat_5vgdl")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_5vgdl")
 
+[node name="FlagLabel" type="Label" parent="Button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="gui_input" from="Button" to="." method="_on_button_gui_input"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

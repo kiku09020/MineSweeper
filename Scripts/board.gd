@@ -8,26 +8,28 @@ extends Panel
 
 @export_group("Properties")
 @export var board_size = 4
+@export var generated_mine_count = 10
 
 #*--------------- Fields ---------------*
 var tiles: Array = []
 
 var is_generated_tiles = false
 
+var current_flag_count = 0
+
 #*--------------- Signals ---------------*
+signal on_rest_mine_count_changed(flag_count: int)
 
 #*--------------- Events ---------------*
 func _ready() -> void:
+	# コンテナ初期化
 	setup_container()
 
+	# タイル生成
 	generate_tiles()
-	pass
 
-func _process(_delta: float) -> void:
-	pass
-
-# Input
-func _input(_event: InputEvent) -> void:
+	# 爆弾数をセット
+	set_rest_mine_count()
 	pass
 
 #*--------------- Methos ---------------*
@@ -55,15 +57,33 @@ func generate_tiles():
 			clear_tiles_around_zero(tile)
 		)
 
+		# フラグイベントにフラグカウント追加処理を追加
+		tile.on_flag_changed.connect(func(is_flag: bool):
+			if is_flag:
+				current_flag_count += 1
+			else:
+				current_flag_count -= 1
+
+			set_rest_mine_count()
+		)
+
 #------------------------------------------------------------
 
 ## 爆弾をセット
 func set_mines_on_tiles():
 	if is_generated_tiles: return
 
-	for tile in tiles:
-		# 爆弾セット
-		tile.set_mine()
+	var mine_count = 0
+	var mines = []
+
+	# 爆弾をセット
+	while mine_count < generated_mine_count:
+		var random_index = randi() % (board_size * board_size)
+		if mines.find(random_index) != - 1: continue # すでに爆弾がセットされている場合は再抽選
+		mines.push_back(random_index)
+		tiles[random_index].set_mine()
+
+		mine_count += 1
 
 	for tile in tiles:
 		# タイルの周りの爆弾数をカウント
@@ -83,12 +103,17 @@ func set_mines_around_count(tile: Tile):
 	
 	tile.set_mine_count(count)
 
+## 残りの爆弾数をセット
+func set_rest_mine_count():
+	var rest_mine_count = generated_mine_count - current_flag_count
+	on_rest_mine_count_changed.emit(rest_mine_count)
+
 #------------------------------------------------------------
 
 ## 0タイルをクリックしたときに、周りの数字タイルのクリア処理
 func clear_tiles_around_zero(tile: Tile):
 	# 0タイル以外はスキップ
-	if tile.count != 0: return
+	if tile.count != 0 or tile.is_flag: return
 
 	# クリックされたタイルをキューに追加
 	var queue: Array = []

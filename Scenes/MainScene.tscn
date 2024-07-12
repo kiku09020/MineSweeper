@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6y2rjf1gfk0e"]
+[gd_scene load_steps=5 format=3 uid="uid://c6y2rjf1gfk0e"]
 
 [ext_resource type="PackedScene" uid="uid://cs6t3388kocam" path="res://Scenes/PackedScenes/board.tscn" id="1_vvcjq"]
+[ext_resource type="Script" path="res://Scenes/GameUIController.gd" id="2_1vqru"]
 [ext_resource type="Script" path="res://Scenes/InputManager.gd" id="2_fq5p5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_draxg"]
+font_size = 24
 
 [node name="Root" type="Node"]
 
@@ -17,9 +21,21 @@ grow_vertical = 2
 
 [node name="Board" parent="ControlRoot/BoardLayer" instance=ExtResource("1_vvcjq")]
 
-[node name="GameUILayer" type="CanvasLayer" parent="ControlRoot"]
+[node name="GameUILayer" type="CanvasLayer" parent="ControlRoot" node_paths=PackedStringArray("flag_count_label")]
+script = ExtResource("2_1vqru")
+flag_count_label = NodePath("Label")
+
+[node name="Label" type="Label" parent="ControlRoot/GameUILayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "000"
+label_settings = SubResource("LabelSettings_draxg")
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="GameManager" type="Node" parent="."]
 
 [node name="InputManager" type="Node" parent="."]
 script = ExtResource("2_fq5p5")
+
+[connection signal="on_rest_mine_count_changed" from="ControlRoot/BoardLayer/Board" to="ControlRoot/GameUILayer" method="_on_board_on_rest_mine_count_changed"]

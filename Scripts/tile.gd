@@ -6,6 +6,7 @@ class_name Tile
 @export_group("Nodes")
 @export var button: Button
 @export var label: Label
+@export var flag_label: Label
 
 @export_group("Properties")
 @export var mine_rate = .2
@@ -20,8 +21,12 @@ var is_cleared = false
 ## 爆弾フラグ
 var is_mine = false
 
+## フラグフラグ
+var is_flag = false
+
 #*--------------- Signals ---------------*
 signal on_button_clicked
+signal on_flag_changed(is_flag: bool)
 
 #*--------------- Methods ---------------*
 ## 生成処理
@@ -36,16 +41,28 @@ func set_mine_count(_count: int):
 	count = _count
 	label.text = str(_count)
 
+## 爆弾セット
 func set_mine():
 	if is_cleared: return
 
-	is_mine = randf_range(0, 1) < mine_rate
-	if is_mine:
-		label.text = "💣"
+	is_mine = true
+	label.text = "💣"
+
+## フラグセット
+func set_flag():
+	if is_cleared: return
+
+	is_flag = !is_flag
+	if is_flag:
+		flag_label.text = "🚩"
+	else:
+		flag_label.text = ""
+
+	on_flag_changed.emit(is_flag)
 
 ## クリア処理
 func cleared():
-	if is_cleared: return
+	if is_cleared or is_flag: return
 
 	is_cleared = true
 	button.visible = false
@@ -55,4 +72,9 @@ func cleared():
 func _on_button_pressed() -> void:
 	cleared()
 	on_button_clicked.emit()
-	pass # Replace with function body.
+
+# 右クリック判定用シグナル
+func _on_button_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			set_flag()
