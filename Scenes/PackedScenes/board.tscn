@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cs6t3388kocam"]
+[gd_scene load_steps=4 format=3 uid="uid://cs6t3388kocam"]
 
 [ext_resource type="Script" path="res://Scripts/board.gd" id="1_4c7mx"]
 [ext_resource type="PackedScene" uid="uid://bhg2lwgdw2oau" path="res://Scenes/PackedScenes/tile.tscn" id="2_pjc3c"]
+[ext_resource type="Script" path="res://Scenes/PackedScenes/BoardDebugger.gd" id="3_ft34y"]
 
 [node name="Board" type="Panel" node_paths=PackedStringArray("container")]
 anchors_preset = 8
@@ -20,6 +21,7 @@ script = ExtResource("1_4c7mx")
 tile_packed_scene = ExtResource("2_pjc3c")
 container = NodePath("GridContainer")
 board_size = 8
+generated_mine_count = 20
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
@@ -29,3 +31,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 8
+
+[node name="Managers" type="Node" parent="."]
+
+[node name="BoardDebugger" type="Node" parent="Managers" node_paths=PackedStringArray("board")]
+script = ExtResource("3_ft34y")
+board = NodePath("../..")
