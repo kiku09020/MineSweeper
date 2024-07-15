@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckm3po1a0rajf"]
+
+[ext_resource type="FontFile" uid="uid://blmruqsr4sjb5" path="res://Assets/Fonts/upheavtt.ttf" id="1_qnn16"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_draxg"]
+font = ExtResource("1_qnn16")
+font_size = 32
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="GameUILabelBase" type="Label"]
+custom_minimum_size = Vector2(0, 64)
+offset_right = 40.0
+offset_bottom = 23.0
+text = "000"
+label_settings = SubResource("LabelSettings_draxg")
+vertical_alignment = 1

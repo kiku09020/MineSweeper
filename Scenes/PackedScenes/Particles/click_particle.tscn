@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c23ijggdv2mcn"]
+
+[ext_resource type="Texture2D" uid="uid://bui4dxnduh0cw" path="res://Assets/Textures/White_256.png" id="1_ochlt"]
+
+[sub_resource type="Curve" id="Curve_30kdk"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.467033, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="ClickParticle" type="CPUParticles2D"]
+texture = ExtResource("1_ochlt")
+emission_shape = 1
+emission_sphere_radius = 24.74
+spread = 180.0
+initial_velocity_max = 578.64
+angular_velocity_min = 20.0
+angular_velocity_max = 180.0
+scale_amount_min = 0.0
+scale_amount_max = 0.25
+scale_amount_curve = SubResource("Curve_30kdk")

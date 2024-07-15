@@ -11,6 +11,8 @@ var is_gameclear = false
 signal on_gameover
 signal on_gameclear
 
+signal on_game_started
+
 #*--------------- Events ---------------*
 func _ready() -> void:
 	pass
@@ -32,3 +34,7 @@ func _on_board_on_cleared_all_tiles() -> void:
 	# 全てのタイルをクリアしたら、ゲームクリア
 	is_gameclear = true
 	on_gameclear.emit()
+
+func _on_board_on_first_tile_cleared() -> void:
+	on_game_started.emit()
+	pass

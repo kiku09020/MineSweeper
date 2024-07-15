@@ -20,9 +20,16 @@ func _ready() -> void:
 	pass
 
 #*--------------- Methods ---------------*
+## レイヤー表示アニメーション
+func play_show_layer_animation(layer: CanvasLayer):
+	pass
+
+#------------------------------------------------------------
 
 func _on_game_manager_on_gameover() -> void:
+	game_ui_layer.hide()
 	gameover_layer.show()
 
 func _on_game_manager_on_gameclear() -> void:
+	game_ui_layer.hide()
 	gameclear_layer.show()

@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://c11fvyoseipbs"]
+
+[ext_resource type="Script" path="res://Scripts/Managers/GameUIController.gd" id="1_lalh6"]
+[ext_resource type="PackedScene" uid="uid://ckm3po1a0rajf" path="res://Scenes/UI/Labels/game_ui_label.tscn" id="2_bgctd"]
+[ext_resource type="Script" path="res://Scenes/UI/Layers/GameTimer.gd" id="3_5fkkx"]
+
+[node name="GameUILayer" type="CanvasLayer" node_paths=PackedStringArray("flag_count_label", "timer_label")]
+script = ExtResource("1_lalh6")
+flag_count_label = NodePath("LabelContainer/RestMineCountLabel")
+timer_label = NodePath("LabelContainer/TimerLabel")
+flag_count_label_minus_color = Color(1, 0.313726, 0.247059, 1)
+
+[node name="LabelContainer" type="VBoxContainer" parent="."]
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 144.0
+offset_bottom = 102.0
+
+[node name="RestMineCountLabel" parent="LabelContainer" instance=ExtResource("2_bgctd")]
+layout_mode = 2
+
+[node name="TimerLabel" parent="LabelContainer" instance=ExtResource("2_bgctd")]
+layout_mode = 2
+text = "🕒 000"
+
+[node name="GameTimer" type="Node" parent="."]
+script = ExtResource("3_5fkkx")
+
+[connection signal="on_time_changed" from="GameTimer" to="." method="_on_game_timer_on_time_changed"]

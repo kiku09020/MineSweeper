@@ -36,6 +36,9 @@ signal on_mine_clicked
 ## 全タイルクリア時シグナル
 signal on_cleared_all_tiles
 
+## 最初のタイルクリア時シグナル
+signal on_first_tile_cleared
+
 #*--------------- Events ---------------*
 func _ready() -> void:
 
@@ -78,6 +81,9 @@ func generate_tiles():
 
 			# タイル数チェック
 			check_tiles_count()
+
+			# イベント発火
+			on_first_tile_cleared.emit()
 		)
 
 		# 爆弾クリック時イベントに処理追加

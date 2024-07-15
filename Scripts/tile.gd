@@ -48,7 +48,12 @@ func set_mine_count(_count: int):
 	if is_mine: return
 
 	mine_count = _count
-	label.text = str(_count)
+
+	# 爆弾数が0以上の場合、ラベルに表示
+	if mine_count > 0:
+		label.text = str(_count)
+	else:
+		label.text = ""
 
 ## 爆弾セット
 func set_mine():
