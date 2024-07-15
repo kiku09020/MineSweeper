@@ -28,7 +28,7 @@ grow_vertical = 2
 follow_viewport_enabled = true
 
 [node name="Board" parent="ControlRoot/BoardLayer" instance=ExtResource("1_vvcjq")]
-generated_mine_count = 16
+generated_mine_count = 12
 
 [node name="GameUILayer" parent="ControlRoot" instance=ExtResource("2_et0tu")]
 

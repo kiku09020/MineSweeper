@@ -2,6 +2,7 @@
 extends Node
 
 #*--------------- Extported Fields ---------------*
+@export var enabele_debug_input = false
 
 #*--------------- Fields ---------------*
 var operatable = true
@@ -34,6 +35,8 @@ func _input(_event: InputEvent) -> void:
 #*--------------- Methods ---------------*
 ## デバッグ入力判定
 func debug_input_process(_event: InputEvent):
+	if not enabele_debug_input: return
+
 	if _event.is_action_pressed("f1"):
 		on_debug_input_f1.emit()
 
