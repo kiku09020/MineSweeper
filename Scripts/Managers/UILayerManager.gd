@@ -9,6 +9,9 @@ class_name UILayerManager
 @export var gameover_layer: CanvasLayer
 @export var gameclear_layer: CanvasLayer
 
+@export_group("Properties")
+@export var hide_game_ui_layer = false
+
 #*--------------- Fields ---------------*
 
 #*--------------- Signals ---------------*
@@ -27,9 +30,9 @@ func play_show_layer_animation(layer: CanvasLayer):
 #------------------------------------------------------------
 
 func _on_game_manager_on_gameover() -> void:
-	game_ui_layer.hide()
+	if hide_game_ui_layer: game_ui_layer.hide()
 	gameover_layer.show()
 
 func _on_game_manager_on_gameclear() -> void:
-	game_ui_layer.hide()
+	if hide_game_ui_layer: game_ui_layer.hide()
 	gameclear_layer.show()

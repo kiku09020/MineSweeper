@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c6y2rjf1gfk0e"]
+[gd_scene load_steps=11 format=3 uid="uid://c6y2rjf1gfk0e"]
 
 [ext_resource type="PackedScene" uid="uid://cs6t3388kocam" path="res://Scenes/PackedScenes/board.tscn" id="1_vvcjq"]
 [ext_resource type="PackedScene" uid="uid://c11fvyoseipbs" path="res://Scenes/UI/Layers/game_ui_layer.tscn" id="2_et0tu"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/Managers/InputManager.gd" id="4_tslhq"]
 [ext_resource type="Script" path="res://Scripts/Managers/UILayerManager.gd" id="5_kdc32"]
 [ext_resource type="PackedScene" uid="uid://c23ijggdv2mcn" path="res://Scenes/PackedScenes/Particles/click_particle.tscn" id="6_f46jv"]
+[ext_resource type="Script" path="res://Scenes/CameraController.gd" id="9_aaocf"]
 
 [sub_resource type="Gradient" id="Gradient_l5ap8"]
 offsets = PackedFloat32Array(0.013245, 0.304636, 1)
@@ -24,9 +25,10 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BoardLayer" type="CanvasLayer" parent="ControlRoot"]
+follow_viewport_enabled = true
 
 [node name="Board" parent="ControlRoot/BoardLayer" instance=ExtResource("1_vvcjq")]
-generated_mine_count = 12
+generated_mine_count = 16
 
 [node name="GameUILayer" parent="ControlRoot" instance=ExtResource("2_et0tu")]
 
@@ -62,14 +64,22 @@ initial_velocity_max = 256.0
 scale_amount_max = 0.1
 color_ramp = SubResource("Gradient_l5ap8")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("9_aaocf")
+shake_strength = 50.0
+shake_fade = 5
+
 [connection signal="on_cleared_all_tiles" from="ControlRoot/BoardLayer/Board" to="Managers/GameManager" method="_on_board_on_cleared_all_tiles"]
 [connection signal="on_first_tile_cleared" from="ControlRoot/BoardLayer/Board" to="Managers/GameManager" method="_on_board_on_first_tile_cleared"]
 [connection signal="on_mine_clicked" from="ControlRoot/BoardLayer/Board" to="Managers/GameManager" method="_on_board_on_mine_clicked"]
 [connection signal="on_rest_mine_count_changed" from="ControlRoot/BoardLayer/Board" to="ControlRoot/GameUILayer" method="_on_board_on_rest_mine_count_changed"]
 [connection signal="on_game_started" from="Managers/GameManager" to="ControlRoot/GameUILayer/GameTimer" method="_on_game_manager_on_game_started"]
 [connection signal="on_gameclear" from="Managers/GameManager" to="Managers/UILayerManager" method="_on_game_manager_on_gameclear"]
+[connection signal="on_gameover" from="Managers/GameManager" to="ControlRoot/GameUILayer" method="_on_game_manager_on_gameover"]
 [connection signal="on_gameover" from="Managers/GameManager" to="Managers/UILayerManager" method="_on_game_manager_on_gameover"]
 [connection signal="on_gameover" from="Managers/GameManager" to="Managers/InputManager" method="_on_game_manager_on_gameover"]
+[connection signal="on_gameover" from="Managers/GameManager" to="Camera2D" method="_on_game_manager_on_gameover"]
 [connection signal="on_debug_input_f1" from="Managers/InputManager" to="ControlRoot/BoardLayer/Board/Managers/BoardDebugger" method="_on_input_manager_on_debug_input_f_1"]
 
 [editable path="ControlRoot/BoardLayer/Board"]

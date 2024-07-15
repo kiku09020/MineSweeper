@@ -78,6 +78,8 @@ func set_flag():
 func set_button_operatable(_operatable: bool):
 	button_operatable = _operatable
 
+#------------------------------------------------------------
+
 ## クリア処理
 func cleared():
 	if is_cleared or is_flag: return

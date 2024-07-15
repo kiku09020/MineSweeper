@@ -4,22 +4,28 @@
 [ext_resource type="PackedScene" uid="uid://ckm3po1a0rajf" path="res://Scenes/UI/Labels/game_ui_label.tscn" id="2_bgctd"]
 [ext_resource type="Script" path="res://Scenes/UI/Layers/GameTimer.gd" id="3_5fkkx"]
 
-[node name="GameUILayer" type="CanvasLayer" node_paths=PackedStringArray("flag_count_label", "timer_label")]
+[node name="GameUILayer" type="CanvasLayer" node_paths=PackedStringArray("flag_count_label", "timer_label", "rigid_body")]
 script = ExtResource("1_lalh6")
-flag_count_label = NodePath("LabelContainer/RestMineCountLabel")
-timer_label = NodePath("LabelContainer/TimerLabel")
+flag_count_label = NodePath("RigidBody2D/LabelContainer/RestMineCountLabel")
+timer_label = NodePath("RigidBody2D/LabelContainer/TimerLabel")
+rigid_body = NodePath("RigidBody2D")
 flag_count_label_minus_color = Color(1, 0.313726, 0.247059, 1)
 
-[node name="LabelContainer" type="VBoxContainer" parent="."]
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 144.0
-offset_bottom = 102.0
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(32, 100)
+sleeping = true
+linear_velocity = Vector2(128, -512)
+angular_velocity = 0.785398
 
-[node name="RestMineCountLabel" parent="LabelContainer" instance=ExtResource("2_bgctd")]
+[node name="LabelContainer" type="VBoxContainer" parent="RigidBody2D"]
+offset_top = -68.0
+offset_right = 112.0
+offset_bottom = 64.0
+
+[node name="RestMineCountLabel" parent="RigidBody2D/LabelContainer" instance=ExtResource("2_bgctd")]
 layout_mode = 2
 
-[node name="TimerLabel" parent="LabelContainer" instance=ExtResource("2_bgctd")]
+[node name="TimerLabel" parent="RigidBody2D/LabelContainer" instance=ExtResource("2_bgctd")]
 layout_mode = 2
 text = "🕒 000"
 

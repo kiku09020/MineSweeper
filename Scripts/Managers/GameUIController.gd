@@ -6,6 +6,9 @@ extends CanvasLayer
 @export var flag_count_label: Label
 @export var timer_label: Label
 
+@export_group("Nodes")
+@export var rigid_body: RigidBody2D
+
 @export_group("Properties")
 @export var flag_count_label_minus_color: Color
 @export var flag_count_label_color := Color.WHITE
@@ -43,4 +46,7 @@ func _on_board_on_rest_mine_count_changed(flag_count: int) -> void:
 
 func _on_game_timer_on_time_changed(time) -> void:
 	set_timer_label(time)
+
+func _on_game_manager_on_gameover() -> void:
+	rigid_body.sleeping = false
 	pass # Replace with function body.
