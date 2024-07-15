@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://einqn55ammdp"]
+[gd_scene load_steps=3 format=3 uid="uid://einqn55ammdp"]
 
 [ext_resource type="PackedScene" uid="uid://c38mlmqid2ix2" path="res://Scenes/UI/Labels/main_text.tscn" id="1_ammp6"]
+[ext_resource type="PackedScene" uid="uid://bbfx7qay7p0cr" path="res://Scenes/UI/Buttons/retry_button.tscn" id="2_wv8f0"]
 
 [node name="GameOverLayer" type="CanvasLayer"]
 
@@ -11,5 +12,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GameOverText" parent="." instance=ExtResource("1_ammp6")]
+[node name="GameOverText" parent="Panel" instance=ExtResource("1_ammp6")]
+layout_mode = 1
+offset_left = -100.5
+offset_right = 100.5
 text = "[shake][center]Game Over![/center][/shake]"
+
+[node name="RetryButton" parent="Panel" instance=ExtResource("2_wv8f0")]
+layout_mode = 1

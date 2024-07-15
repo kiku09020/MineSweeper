@@ -33,7 +33,6 @@ generated_mine_count = 16
 [node name="GameUILayer" parent="ControlRoot" instance=ExtResource("2_et0tu")]
 
 [node name="GameClearLayer" parent="ControlRoot" instance=ExtResource("3_s3b3n")]
-visible = false
 
 [node name="GameOverLayer" parent="ControlRoot" instance=ExtResource("4_pbvm6")]
 visible = false
@@ -46,6 +45,8 @@ board_layer = NodePath("../../ControlRoot/BoardLayer")
 game_ui_layer = NodePath("../../ControlRoot/GameUILayer")
 gameover_layer = NodePath("../../ControlRoot/GameOverLayer")
 gameclear_layer = NodePath("../../ControlRoot/GameClearLayer")
+transition_type = 4
+easing_type = 2
 
 [node name="GameManager" type="Node" parent="Managers"]
 script = ExtResource("3_100mc")
